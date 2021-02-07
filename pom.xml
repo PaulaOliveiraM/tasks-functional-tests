@@ -4,8 +4,8 @@
   <artifactId>functional-tests</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <properties>
-  	<mavem.compiler.source>14</mavem.compiler.source>
-  	<mavem.compiler.target>14</mavem.compiler.target>
+  	<mavem.compiler.source>1.8</mavem.compiler.source>
+  	<mavem.compiler.target>1.8</mavem.compiler.target>
   </properties>
   
   <dependencies>
