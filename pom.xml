@@ -3,6 +3,10 @@
   <groupId>br.ce.paulaoliveira.tasks</groupId>
   <artifactId>functional-tests</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <properties>
+  	<mavem.compiler.source>14</mavem.compiler.source>
+  	<mavem.compiler.target>14</mavem.compiler.target>
+  </properties>
   
   <dependencies>
     <dependency>
