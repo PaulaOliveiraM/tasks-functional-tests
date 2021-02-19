@@ -1,5 +1,7 @@
 package br.ce.paulaoliveira.tasksfunctional;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
@@ -9,6 +11,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
 public class TasksTest {
@@ -18,22 +22,22 @@ public class TasksTest {
 		System.setProperty("webdriver.chrome.driver","/home/paula/seleniumDrivers/chromedriver");
 	}
 	
-	private WebDriver acessarAplicacao() {
+	private WebDriver acessarAplicacao() throws MalformedURLException {
 		ChromeOptions chromeOptions =  new ChromeOptions();
-		chromeOptions.addArguments("--headless","--no-sandbox");
-		WebDriver driver = new ChromeDriver(chromeOptions);
+	    chromeOptions.addArguments("--headless","--no-sandbox");
 		
-		driver.navigate().to("http:/localhost:8080/tasks");
+		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.69:4444/wd/hub"),chromeOptions);
+		driver.navigate().to("http:/192.168.1.69:8080/tasks/");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
 	
 	
 	@Test
-	public void deveSalvarTarefaComSucesso() {
+	public void deveSalvarTarefaComSucesso() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-			driver.navigate().to("http:/localhost:8080/tasks");
+			driver.navigate().to("http:/192.168.1.69:8080/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.findElement(By.id("addTodo")).click();
 			driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
@@ -48,10 +52,10 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void naodeveSalvarTarefaSemDescricao() {
+	public void naodeveSalvarTarefaSemDescricao() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-			driver.navigate().to("http:/localhost:8080/tasks");
+			driver.navigate().to("http:/192.168.1.69:8080/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.findElement(By.id("addTodo")).click();
 			driver.findElement(By.id("dueDate")).sendKeys("10/10/2030");
@@ -65,10 +69,10 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaSemData() {
+	public void naoDeveSalvarTarefaSemData() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-			driver.navigate().to("http:/localhost:8080/tasks");
+			driver.navigate().to("http:/192.168.1.69:8080/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.findElement(By.id("addTodo")).click();
 			driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
@@ -82,10 +86,10 @@ public class TasksTest {
 	}
 	
 	@Test
-	public void naoDeveSalvarTarefaComDataPassada() {
+	public void naoDeveSalvarTarefaComDataPassada() throws MalformedURLException {
 		WebDriver driver = acessarAplicacao();
 		try {
-			driver.navigate().to("http:/localhost:8080/tasks");
+			driver.navigate().to("http:/192.168.1.69:8080/tasks");
 			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 			driver.findElement(By.id("addTodo")).click();
 			driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
