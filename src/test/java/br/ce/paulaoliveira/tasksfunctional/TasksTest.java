@@ -8,6 +8,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 
 public class TasksTest {
@@ -18,7 +19,10 @@ public class TasksTest {
 	}
 	
 	private WebDriver acessarAplicacao() {
-		WebDriver driver = new ChromeDriver();
+		ChromeOptions chromeOptions =  new ChromeOptions();
+		chromeOptions.addArguments("--headless","--no-sandbox");
+		WebDriver driver = new ChromeDriver(chromeOptions);
+		
 		driver.navigate().to("http:/localhost:8080/tasks");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
