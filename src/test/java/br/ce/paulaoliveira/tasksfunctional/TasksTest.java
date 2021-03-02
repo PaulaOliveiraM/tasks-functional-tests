@@ -6,12 +6,10 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.Test;	
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 
@@ -27,7 +25,7 @@ public class TasksTest {
 	    chromeOptions.addArguments("--headless","--no-sandbox");
 		
 		WebDriver driver = new RemoteWebDriver(new URL("http://192.168.1.69:4444/wd/hub"),chromeOptions);
-		driver.navigate().to("http:/192.168.1.69:8080/tasks/");
+		driver.navigate().to("http://192.168.1.69:8080/tasks/");
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 		return driver;
 	}
@@ -103,6 +101,27 @@ public class TasksTest {
 		}
 	}
 	
+	@Test
+	public void deveRemoverTarefaComSucesso() throws MalformedURLException {
+		WebDriver driver = acessarAplicacao();
+		try {
+			driver.navigate().to("http:/192.168.1.69:8080/tasks");
+			driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+			driver.findElement(By.id("addTodo")).click();
+			driver.findElement(By.id("task")).sendKeys("Teste via Selenium");
+			driver.findElement(By.id("dueDate")).sendKeys("10/10/2050");
+			driver.findElement(By.id("saveButton")).click();		
+			String message = driver.findElement(By.id("message")).getText();			
+			Assert.assertEquals("Success!", message);
+			
+			driver.findElement(By.xpath("//a[@class='btn btn-outline-danger btn-sm']")).click();
+			String message1 = driver.findElement(By.id("message")).getText();			
+			Assert.assertEquals("Success!", message1);
+			
+		}finally {
+			driver.quit();
+		}
+	}
 	
 }
 
